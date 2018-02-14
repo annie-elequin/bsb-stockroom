@@ -1,8 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Routes from './Routes.js';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// const reducers = {
+// 	form: formReducer
+// };
+//
+// const reducer = combineReducers(reducers);
+// const store = createStore(reducer);
+
+const mountNode = document.querySelector('#application');
+ReactDOM.render(<Routes />, document.getElementById('application'));
+
 registerServiceWorker();
