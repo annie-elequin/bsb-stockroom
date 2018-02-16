@@ -8,6 +8,7 @@ import AdminDashboard from './pages/Admin/AdminDashboard.js';
 import Order from './pages/Order.js';
 import Review from './pages/Review.js';
 import EditProfile from './pages/EditProfile.js';
+import Confirm from './pages/Confirm.js';
 
 export default class Routes extends React.Component {
 	render() {
@@ -20,7 +21,8 @@ export default class Routes extends React.Component {
             <Route exact path="/admin" component={AdminDashboard} />
             <Route exact path="/order" component={Order} />
             <Route exact path="/review" component={Review} />
-            <Route exact path="/edit" component={EditProfile} />
+						<Route exact path="/edit" component={EditProfile} />
+						<Route exact path="/confirm" component={Confirm} />
           </div>
 			</HashRouter>
 		);

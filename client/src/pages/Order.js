@@ -7,9 +7,9 @@ export default class Order extends React.Component {
         <div>
           <Link to="/">Go Back Home</Link><br/><br/>
           ORDER PAGE<br/>
-          This page is for new users to register.<br/>
+          This page is for users to place their order.<br/>
           <ul>
-            <li><Link to="/verify">Done</Link></li>
+            <li><Link to="/review">Done</Link></li>
           </ul>
         </div>
 		);
