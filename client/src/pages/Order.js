@@ -1,11 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+
+import Navigation from '../components/NavBar.js';
 
 export default class Order extends React.Component {
 	render() {
 		return (
         <div>
-          <Link to="/">Go Back Home</Link><br/><br/>
+				<Navigation/>
           ORDER PAGE<br/>
           This page is for users to place their order.<br/>
           <ul>

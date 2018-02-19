@@ -1,11 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import Navigation from '../components/NavBar.js';
+
 export default class EditProfile extends React.Component {
 	render() {
 		return (
         <div>
-          <Link to="/">Go Back Home</Link><br/><br/>
+				<Navigation/>
           EDIT PROFILE PAGE<br />
           This will probably be a modal, actually; not an actual page.<br/>
           <ul>

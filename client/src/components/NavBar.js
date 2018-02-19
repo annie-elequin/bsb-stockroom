@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  NavLink, } from 'reactstrap';
 
 export default class Navigation extends React.Component {
 
@@ -19,11 +14,10 @@ export default class Navigation extends React.Component {
     return (
       <div>
         <Navbar className="navbar-dark bg-dark">
-          <NavbarBrand href="/">reactstrap</NavbarBrand>
+          <Link to="/"><NavbarBrand>BSB Stockroom App (click to go home)</NavbarBrand></Link>
           <Nav>
             <NavLink href="#">Link</NavLink>
             <NavLink href="#">Link</NavLink>
-            <NavLink href="#">Another Link</NavLink>
             <NavLink disabled href="#">Disabled Link</NavLink>
           </Nav>
         </Navbar>

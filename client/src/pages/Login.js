@@ -22,13 +22,33 @@ export default class Login extends React.Component {
 		return (
         <div>
 				<Navigation/>
-          LOGIN PAGE<br />
-          <ul>
-            <li><Link to="/verify">Login</Link></li>
-            <li><Link to="/register">Register</Link></li>
-            <li><Link to="/admin">Admin</Link></li>
-          </ul>
-					<br/><br/>
+				Note: The BSB Stockroom App Title will not be there (will likely be a bear or baylor logo)<br/>
+				and it will not be the method of returning to the homepage. That will be accomplished with various <br/>
+				'back' and 'cancel' buttons.<br/><br/>
+
+					<Container>
+						<Row>
+							<Col>Login Page<br/>(only pages accessible from Login screen)</Col>
+							<Col>Ever Other Available Page<br/>(for developer ease of use)</Col>
+						</Row>
+						<Row>
+							<Col>
+									<ul>
+										<li><Link to="/verify">Login</Link></li>
+										<li><Link to="/register">Register</Link></li>
+										<li><Link to="/admin">Admin</Link></li>
+									</ul>
+							</Col>
+							<Col>
+									<ul>
+										<li><Link to="/order">Order</Link></li>
+										<li><Link to="/review">Staff Review</Link></li>
+										<li><Link to="/edit">Edit Profile</Link></li>
+										<li><Link to="/confirm">Customer Confirmation</Link></li>
+									</ul>
+							</Col>
+						</Row>
+					</Container>
 
 					{/* BEGIN ACTUAL CONTENT */}
 

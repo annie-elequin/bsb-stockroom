@@ -1,11 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import Navigation from '../components/NavBar.js';
+
 export default class Review extends React.Component {
 	render() {
 		return (
         <div>
-          <Link to="/">Go Back Home</Link><br/><br/>
+				<Navigation/>
           REVIEW PAGE<br/>
           This page is for staff to confirm the order and confirm delivery.<br/>
           <ul>
