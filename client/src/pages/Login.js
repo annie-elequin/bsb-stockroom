@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {Jumbotron,Container,Row,Col,Button} from 'reactstrap';
 
+import Navigation from '../components/NavBar.js';
+
 /*
 LOGIN PAGE
 From this page, the user should be able to...
@@ -19,6 +21,7 @@ export default class Login extends React.Component {
 	render() {
 		return (
         <div>
+				<Navigation/>
           LOGIN PAGE<br />
           <ul>
             <li><Link to="/verify">Login</Link></li>
@@ -32,52 +35,22 @@ export default class Login extends React.Component {
 					{/* HEADER JUMBOTRON -- contains login component */}
 
 
-					<Container fluid={true}>
+					<Container fluid={false}>
 		        <Row>
 		          <Col>
-
-							<Jumbotron>
-								<h1 className="display-3">Hello, World</h1>
-								<p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
-				        <hr className="my-2" />
-				        <p>It uses utility classes for typgraphy and spacing to space content out within the larger container.</p>
-				        <p className="lead">
-				          <Button color="primary">Learn More</Button>
-				        </p>
-							</Jumbotron>
-
+									<Jumbotron>
+											<div className="text-center">
+													<h1 className="display-3">Welcome!</h1>
+													<p className="lead">Please enter your Baylor ID Number in the field below.</p>
+									        <hr className="my-2" />
+									        <p>This will be where the Bear ID input is.</p>
+									        <p className="lead">
+									          <Link to="/verify"><Button color="primary" size="lg" active>Login</Button></Link>
+									        </p>
+											</div>
+									</Jumbotron>
 							</Col>
-		        </Row>
-		        <Row>
-		          <Col>.col</Col>
-		          <Col>.col</Col>
-		          <Col>.col</Col>
-		          <Col>.col</Col>
-		        </Row>
-		        <Row>
-		          <Col xs="3">.col-3</Col>
-		          <Col xs="auto">.col-auto - variable width content</Col>
-		          <Col xs="3">.col-3</Col>
-		        </Row>
-		        <Row>
-		          <Col xs="6">.col-6</Col>
-		          <Col xs="6">.col-6</Col>
-		        </Row>
-		        <Row>
-		          <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
-		          <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
-		          <Col sm="4">.col .col-sm-4</Col>
-		        </Row>
-		        <Row>
-		          <Col sm={{ size: 6, order: 2, offset: 1 }}>.col .col-sm-6 .col-sm-order-2 .col-sm-offset-2</Col>
-		        </Row>
-		        <Row>
-		          <Col sm="12" md={{ size: 8, offset: 2 }}>.col .col-sm-12 .col-md-6 .col-md-offset-3</Col>
-		        </Row>
-		        <Row>
-		          <Col sm={{ size: 'auto', offset: 1 }}>.col .col-sm .col-sm-offset-1</Col>
-		          <Col sm={{ size: 'auto', offset: 1 }}>.col .col-sm .col-sm-offset-1</Col>
-		        </Row>
+						</Row>
 		      </Container>
 
 			{/* END ACTUAL CONTENT */}
