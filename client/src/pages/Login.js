@@ -18,7 +18,41 @@ From this page, the user should be able to...
 */
 
 export default class Login extends React.Component {
+
+	constructor(){
+		super();
+	}
+
 	render() {
+
+		{/* TODO - pull values from database */}
+		if(!localStorage.getItem('dbInfo')){
+
+			console.log("Setting db info in local storage.");
+
+			var dbItems = [
+				"Gloves","Test Tubes","Dry Ice","Ammonia","Sodium Chloride"
+			]
+			var dbDept = [
+				"Biology","Chemistry","Physics"
+			]
+			var dbProf = [
+				"Adair","Hodson","Nazzario","Hall"
+			]
+			var dbGrant = [
+				"Williamson Fund","Cool Grant"
+			]
+
+			var dbInfo = {
+				items: dbItems,
+				dept: dbDept,
+				prof: dbProf,
+				grant: dbGrant
+			}
+
+			localStorage.setItem('dbInfo',dbInfo);
+		}
+
 		return (
         <div>
 				<Navigation/>

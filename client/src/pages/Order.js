@@ -1,12 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Jumbotron,Container,Row,Col,Button,Table} from 'reactstrap';
-
+import {Container,Row,Col,Button,Table,Form,Input} from 'reactstrap';
+import NumericInput from 'react-numeric-input';
 import Navigation from '../components/NavBar.js';
 
 export default class Order extends React.Component {
+
+	constructor(){
+		super();
+
+		// var dbInfo = {
+		// 	items: dbItems,
+		// 	dept: dbDept,
+		// 	prof: dbProf,
+		// 	grant: dbGrant
+		// }
+
+		this.state = {
+			dbInfo: localStorage.getItem('dbInfo'),
+			orderItems: [],
+			showForm: false
+		}
+
+		this.addItem = this.addItem.bind(this);
+	}
+
+	// var one = {
+	//  item: "one",
+	//  qua: 2,
+	//  dept: "Physics",
+	//  prof: "Nazzario",
+	//  grant: "N/A"
+ // }
+
+ addItem(e){
+	 console.log("You are adding a new item.");
+	 this.setState({showForm:true});
+ }
+
 	render() {
+		const data = this.state.orderItems;
+		const ItemList = data.map((d) => <Item id={d._id} itemName={d.item} qua={d.qua} dept={d.dept} prof={d.prof} grant ={d.grant} />);
 		return (
         <div>
 				<Navigation/>
@@ -18,32 +53,37 @@ export default class Order extends React.Component {
 
 					{/****************************************************/}
 
-					<Container fluid={false}>
+					<Container fluid={true}>
 
-					{/* THIS ROW CONTAINS: Name, 'Quick Add' Text */}
-						<Row className="order-row">
+					<Row>
 							{/* TODO - pull name dynamically from DB */}
 							<Col className="text-left">
-							<span className="h2">Annie Mathis</span>
+								<span className="h2">Annie Mathis</span>
 							</Col>
+					</Row>
 
-							<Col className="text-right">
+					<Row>
+							{/* TODO - pull ID dynamically from DB */}
+							<Col className="text-left">
+							<span className="h4 text-muted font-italic">12345678</span>
+							</Col>
+					</Row>
+
+					{/* THIS ROW CONTAINS: 'Quick Add' Text */}
+						<Row className="order-row">
+							<Col className="text-center">
 							<span className="h2">Quick Add</span>
 							</Col>
 						</Row>
 
-					{/* THIS ROW CONTAINS: Baylor ID No, Quick Add Buttons */}
+					{/* THIS ROW CONTAINS: Quick Add Buttons */}
 						<Row className="order-row">
-							{/* TODO - pull ID dynamically from DB */}
-							<Col className="text-left">
-								<span className="h4 text-muted font-italic">12345678</span>
-							</Col>
 
-							<Col className="text-right">
-								<Button color="secondary" size="sm">Dry Ice</Button>&nbsp;&nbsp;
-								<Button color="secondary" size="sm">Gloves</Button>&nbsp;&nbsp;
-								<Button color="secondary" size="sm">Item</Button>&nbsp;&nbsp;
-								<Button color="secondary" size="sm">Test Tubes</Button>
+							<Col className="text-center">
+								<Button disabled color="secondary" size="sm">Dry Ice</Button>&nbsp;&nbsp;
+								<Button disabled color="secondary" size="sm">Gloves</Button>&nbsp;&nbsp;
+								<Button disabled color="secondary" size="sm">Item</Button>&nbsp;&nbsp;
+								<Button disabled color="secondary" size="sm">Test Tubes</Button>
 							</Col>
 						</Row>
 
@@ -53,33 +93,42 @@ export default class Order extends React.Component {
 							{/* TABLE CONTAINING ORDER DETAILS */}
 							{/* TODO - connect to the object/make dynamic */}
 								<Table striped responsive size="sm">
+								{/* HEADERS */}
 					        <thead>
 					          <tr>
-					            <th>#</th>
-					            <th>First Name</th>
-					            <th>Last Name</th>
-					            <th>Username</th>
+					            <th>Item *</th>
+					            <th>No. *</th>
+					            <th>Dept. *</th>
+											<th>Prof.</th>
+											<th>Grant</th>
+											<th></th>
 					          </tr>
 					        </thead>
+
+									{/* CONTENT */}
 					        <tbody>
+
 					          <tr>
-					            <th scope="row">1</th>
-					            <td>Mark</td>
-					            <td>Otto</td>
-					            <td>@mdo</td>
+					            <th scope="row">Dry Ice</th>
+					            <td>5</td>
+					            <td>Biology</td>
+											<td>Adair</td>
+											<td>Williamson Fund</td>
+											<td className="text-center"><Button color="danger" size="sm">X</Button></td>
 					          </tr>
+
 					          <tr>
-					            <th scope="row">2</th>
-					            <td>Jacob</td>
-					            <td>Thornton</td>
-					            <td>@fat</td>
+					            <th scope="row">Test Tubes</th>
+					            <td>2</td>
+					            <td>Chemistry</td>
+											<td>Hodson</td>
+											<td>N/A</td>
+											<td className="text-center"><Button color="danger" size="sm">X</Button></td>
 					          </tr>
-					          <tr>
-					            <th scope="row">3</th>
-					            <td>Larry</td>
-					            <td>the Bird</td>
-					            <td>@twitter</td>
-					          </tr>
+
+										{ItemList}
+										{this.state.showForm?<ItemForm info={this.state.dbInfo}/>:null}
+
 					        </tbody>
 					      </Table>
 							</Col>
@@ -87,8 +136,9 @@ export default class Order extends React.Component {
 
 						{/* THIS ROW CONTAINS: the "add item" button */}
 						<Row className="order-row">
+
 							<Col className="text-right">
-								<Button color="primary" size="md">+ Add Item</Button>
+								<Button color="primary" size="md" onClick={this.addItem}>+ Add Item</Button>
 							</Col>
 						</Row>
 					</Container>
@@ -98,6 +148,67 @@ export default class Order extends React.Component {
 	}
 }
 
+class Item extends React.Component {
+
+	constructor(props){
+		super(props);
+	}
+
+	render(){
+		return(
+			<tr>
+				<th scope="row">{this.props.itemName}</th>
+				<td>{this.props.qua}</td>
+				<td>{this.props.dept}</td>
+				<td>{this.props.prof}</td>
+				<td>{this.props.grant}</td>
+				<td className="text-center"><Button color="danger" size="sm">X</Button></td>
+			</tr>
+		);
+	}
+}
+
+class ItemForm extends React.Component {
+	constructor (props){
+		super(props);
+
+		this.submitForm = this.submitForm.bind(this);
+	}
+
+	submitForm(){
+
+	}
+
+	render(){
+		if(this.props.info){
+			const items = this.props.info.items;
+			const dept = this.props.info.dept;
+			const prof = this.props.info.prof;
+			const grants = this.props.info.grant;
+		}
+		return(
+			<tr>
+						<th scope="row" className="col-sm-3">
+								<Input type="select" name="item" id="itemSelect" >
+									<option>One</option>
+									<option>Two</option>
+									<option>Three</option>
+								</Input></th>
+						<td className="col-sm-2"><NumericInput name="quantity" className="form-control" value={0} min={0} precision={0} mobile required /></td>
+						<td className="col-sm-2">
+								<Input type="select" name="dept" />
+						</td>
+						<td className="col-sm-2">
+								<Input type="select" name="prof" />
+						</td>
+						<td className="col-sm-2">
+								<Input type="select" name="grant" />
+						</td>
+						<td className="text-center"><Button color="danger" size="sm">X</Button></td>
+			</tr>
+		);
+	}
+}
 
 Container.propTypes = {
   fluid:  PropTypes.bool
