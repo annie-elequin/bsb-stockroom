@@ -19,10 +19,6 @@ From this page, the user should be able to...
 
 export default class Login extends React.Component {
 
-	constructor(){
-		super();
-	}
-
 	render() {
 
 		{/* TODO - pull values from database */}

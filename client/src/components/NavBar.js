@@ -5,7 +5,6 @@ import {
   Navbar,
   NavbarBrand,
   Nav,
-  NavItem,
   NavLink, } from 'reactstrap';
 
 export default class Navigation extends React.Component {

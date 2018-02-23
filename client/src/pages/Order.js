@@ -20,10 +20,14 @@ export default class Order extends React.Component {
 		this.state = {
 			dbInfo: localStorage.getItem('dbInfo'),
 			orderItems: [],
-			showForm: false
+			showForm: false,
+			showAdd: true,
+			showSubmitButtons: false
 		}
 
 		this.addItem = this.addItem.bind(this);
+		this.confirmAdd = this.confirmAdd.bind(this);
+		this.cancelAdd = this.cancelAdd.bind(this);
 	}
 
 	// var one = {
@@ -37,6 +41,38 @@ export default class Order extends React.Component {
  addItem(e){
 	 console.log("You are adding a new item.");
 	 this.setState({showForm:true});
+	 this.setState({showAdd: false});
+	 this.setState({showSubmitButtons: true});
+ }
+
+ confirmAdd(e){
+	 console.log("You confirmed adding the new item.");
+	 this.setState({showForm:false});
+	 this.setState({showAdd: true});
+	 this.setState({showSubmitButtons: false});
+
+	 e.preventDefault();
+
+	 var item = document.getElementById('itemSelect').value;
+	 var quantity = document.getElementById('quantity').value;
+	 var dept = document.getElementById('dept').value;
+	 var prof = document.getElementById('prof').value;
+	 var grant = document.getElementById('grant').value;
+
+ }
+
+ cancelAdd(e){
+	 console.log("Cancelled Add.");
+
+	 this.setState({showForm:false});
+	 this.setState({showAdd: true});
+	 this.setState({showSubmitButtons: false});
+
+	 // document.getElementById('itemSelect').value = null;
+	 // document.getElementById('quantity').value = null;
+	 // document.getElementById('dept').value = null;
+	 // document.getElementById('prof').value = null
+	 // document.getElementById('grant').value = null;
  }
 
 	render() {
@@ -137,8 +173,10 @@ export default class Order extends React.Component {
 						{/* THIS ROW CONTAINS: the "add item" button */}
 						<Row className="order-row">
 
-							<Col className="text-right">
-								<Button color="primary" size="md" onClick={this.addItem}>+ Add Item</Button>
+							<Col className="text-right align-top">
+								{this.state.showAdd && <Button color="primary" size="md" onClick={this.addItem}>+ Add Item</Button>}
+								{this.state.showSubmitButtons ? <div><Button color="success" size="md" onClick={this.confirmAdd}>Confirm</Button>&nbsp;
+																<Button color="danger" size="md" onClick={this.cancelAdd}>Cancel</Button></div> : null}
 							</Col>
 						</Row>
 					</Container>
@@ -171,12 +209,6 @@ class Item extends React.Component {
 class ItemForm extends React.Component {
 	constructor (props){
 		super(props);
-
-		this.submitForm = this.submitForm.bind(this);
-	}
-
-	submitForm(){
-
 	}
 
 	render(){
@@ -189,22 +221,22 @@ class ItemForm extends React.Component {
 		return(
 			<tr>
 						<th scope="row" className="col-sm-3">
-								<Input type="select" name="item" id="itemSelect" >
+								<Input type="select" id="itemSelect" required >
 									<option>One</option>
 									<option>Two</option>
 									<option>Three</option>
 								</Input></th>
-						<td className="col-sm-2"><NumericInput name="quantity" className="form-control" value={0} min={0} precision={0} mobile required /></td>
+						<td className="col-sm-2"><NumericInput id="quantity" className="form-control" value={0} min={0} precision={0} mobile required /></td>
 						<td className="col-sm-2">
-								<Input type="select" name="dept" />
+								<Input type="select" id="dept" required/>
 						</td>
 						<td className="col-sm-2">
-								<Input type="select" name="prof" />
+								<Input type="select" id="prof" />
 						</td>
 						<td className="col-sm-2">
-								<Input type="select" name="grant" />
+								<Input type="select" id="grant" />
 						</td>
-						<td className="text-center"><Button color="danger" size="sm">X</Button></td>
+						<td className="text-center"><Button color="danger" size="sm" disabled>X</Button></td>
 			</tr>
 		);
 	}
