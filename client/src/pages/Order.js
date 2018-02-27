@@ -29,15 +29,13 @@ export default class Order extends React.Component {
 			orderItems: [],
 			showForm: false,
 			showAdd: true,
-			showSubmitButtons: false,
-			itemSelect: '',
-			profSelect: '',
-			grantSelect: ''
+			showModal: false
 		}
 
 		this.addItem = this.addItem.bind(this);
 		this.confirmAdd = this.confirmAdd.bind(this);
 		this.cancelAdd = this.cancelAdd.bind(this);
+		this.toggle = this.toggle.bind(this);
 	}
 
 	// var one = {
@@ -84,6 +82,10 @@ export default class Order extends React.Component {
 	 // document.getElementById('prof').value = null
 	 // document.getElementById('grant').value = null;
  }
+
+toggle(){
+	this.setState({showModal: !this.state.showModal});
+}
 
 	render() {
 		const data = this.state.orderItems;
@@ -173,7 +175,7 @@ export default class Order extends React.Component {
 					          </tr>
 
 										{ItemList}
-										{this.state.showForm?<ItemForm info={this.state.dbInfo}/>:null}
+										{/* {this.state.showForm?<ItemForm info={this.state.dbInfo} show={this.state.showModal}/>:null}  */ }
 
 					        </tbody>
 					      </Table>
@@ -184,9 +186,9 @@ export default class Order extends React.Component {
 						<Row className="order-row">
 
 							<Col className="text-right align-top">
-								{this.state.showAdd && <Button color="primary" size="md" onClick={this.addItem}>+ Add Item</Button>}
-								{this.state.showSubmitButtons ? <div><Button color="success" size="md" onClick={this.confirmAdd}>Confirm</Button>&nbsp;
-																<Button color="danger" size="md" onClick={this.cancelAdd}>Cancel</Button></div> : null}
+								{this.state.showAdd && <Button color="primary" size="md" onClick={this.toggle}>+ Add Item</Button>}
+								 {/* {this.state.showSubmitButtons ? <div><Button color="success" size="md" onClick={this.confirmAdd}>Confirm</Button>&nbsp;
+																<Button color="danger" size="md" onClick={this.cancelAdd}>Cancel</Button></div> : null} */}
 							</Col>
 						</Row>
 					</Container>
@@ -215,8 +217,6 @@ class Item extends React.Component {
 		);
 	}
 }
-
-
 
 Container.propTypes = {
   fluid:  PropTypes.bool
