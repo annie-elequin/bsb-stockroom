@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Container,Row,Col,Button,Table,Input} from 'reactstrap';
+import {Container,Row,Col,Button,Table,Input,Form} from 'reactstrap';
+import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import NumericInput from 'react-numeric-input';
 import Navigation from '../components/NavBar.js';
-import ItemForm from '../components/ItemForm.js';
+
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 
 // USING THE SELECT THING
@@ -27,7 +30,7 @@ export default class Order extends React.Component {
 		this.state = {
 			dbInfo: localStorage.getItem('dbInfo'),
 			orderItems: [],
-			showForm: false,
+			itemState: '',
 			showAdd: true,
 			showModal: false
 		}
@@ -90,6 +93,13 @@ toggle(){
 	render() {
 		const data = this.state.orderItems;
 		const ItemList = data.map((d) => <Item id={d._id} itemName={d.item} qua={d.qua} dept={d.dept} prof={d.prof} grant ={d.grant} />);
+
+		var itemOptions = [
+      {value: "one", label: "item one"},
+      {value: "two", label: "item two"},
+      {value: "three", label: "item three"}
+    ];
+
 		return (
         <div>
 				<Navigation/>
@@ -175,7 +185,19 @@ toggle(){
 					          </tr>
 
 										{ItemList}
-										{/* {this.state.showForm?<ItemForm info={this.state.dbInfo} show={this.state.showModal}/>:null}  */ }
+
+										<Modal isOpen={this.state.showModal} toggle={this.toggle}>
+						          <ModalHeader toggle={this.toggle}>Add Item</ModalHeader>
+						          <ModalBody>
+						            <Form>
+													<Select options={itemOptions} value={this.state.itemState.value} name="item" placeholder="Choose an item..." onChange={val=> this.setState({itemState:val})}/>
+												</Form>
+						          </ModalBody>
+						          <ModalFooter>
+						            <Button color="success" onClick={this.toggle}>Add This Item</Button>{' '}
+						            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+						          </ModalFooter>
+						        </Modal>
 
 					        </tbody>
 					      </Table>

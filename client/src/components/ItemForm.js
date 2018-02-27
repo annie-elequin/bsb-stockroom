@@ -58,3 +58,24 @@ export default class ItemForm extends React.Component {
 		);
 	}
 }
+
+{/*
+
+	<tr>
+						<th scope="row" className="col-sm-3">
+								<Select options={itemOptions} value={this.state.itemState} name="item" placeholder="Choose an item..." onChange={val => console.log(val)}/>
+                </th>
+						<td className="col-sm-2"><NumericInput id="quantity" className="form-control" value={0} min={0} precision={0} mobile required /></td>
+						<td className="col-sm-2">
+								<Input type="select" id="dept" required/>
+						</td>
+						<td className="col-sm-2">
+								<Input type="select" id="prof" />
+						</td>
+						<td className="col-sm-2">
+								<Input type="select" id="grant" />
+						</td>
+						<td className="text-center"><Button color="danger" size="sm" disabled>X</Button></td>
+</tr>
+
+*/}
