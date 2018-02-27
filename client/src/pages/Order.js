@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Container,Row,Col,Button,Table,Form,Input} from 'reactstrap';
+import {Container,Row,Col,Button,Table,Input} from 'reactstrap';
 import NumericInput from 'react-numeric-input';
 import Navigation from '../components/NavBar.js';
+import ItemForm from '../components/ItemForm.js';
+
+
+// USING THE SELECT THING
+// <Select options={options} value={this.state.profState} name="language" placeholder="Choose a professor..." onChange={val => console.log(val)}/>
+// more help: https://swizec.com/blog/dropdown-inputs-react/swizec/7224
+
 
 export default class Order extends React.Component {
 
@@ -22,7 +29,10 @@ export default class Order extends React.Component {
 			orderItems: [],
 			showForm: false,
 			showAdd: true,
-			showSubmitButtons: false
+			showSubmitButtons: false,
+			itemSelect: '',
+			profSelect: '',
+			grantSelect: ''
 		}
 
 		this.addItem = this.addItem.bind(this);
@@ -206,41 +216,7 @@ class Item extends React.Component {
 	}
 }
 
-class ItemForm extends React.Component {
-	constructor (props){
-		super(props);
-	}
 
-	render(){
-		if(this.props.info){
-			const items = this.props.info.items;
-			const dept = this.props.info.dept;
-			const prof = this.props.info.prof;
-			const grants = this.props.info.grant;
-		}
-		return(
-			<tr>
-						<th scope="row" className="col-sm-3">
-								<Input type="select" id="itemSelect" required >
-									<option>One</option>
-									<option>Two</option>
-									<option>Three</option>
-								</Input></th>
-						<td className="col-sm-2"><NumericInput id="quantity" className="form-control" value={0} min={0} precision={0} mobile required /></td>
-						<td className="col-sm-2">
-								<Input type="select" id="dept" required/>
-						</td>
-						<td className="col-sm-2">
-								<Input type="select" id="prof" />
-						</td>
-						<td className="col-sm-2">
-								<Input type="select" id="grant" />
-						</td>
-						<td className="text-center"><Button color="danger" size="sm" disabled>X</Button></td>
-			</tr>
-		);
-	}
-}
 
 Container.propTypes = {
   fluid:  PropTypes.bool

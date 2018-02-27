@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {Jumbotron,Container,Row,Col,Button} from 'reactstrap';
 
+
 import Navigation from '../components/NavBar.js';
 
 /*
@@ -17,7 +18,14 @@ From this page, the user should be able to...
 			- will need to talk to Wes about what precisely needs to be on this page
 */
 
+//create order page
+//staff confirm and goes back to login
+
 export default class Login extends React.Component {
+
+constructor(){
+	super();
+}
 
 	render() {
 
@@ -77,6 +85,8 @@ export default class Login extends React.Component {
 										<li><Link to="/confirm">Customer Confirmation</Link></li>
 									</ul>
 							</Col>
+
+
 						</Row>
 					</Container>
 
