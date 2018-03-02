@@ -7,6 +7,6 @@ import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const mountNode = document.querySelector('#application');
-ReactDOM.render(<Routes />, document.getElementById('application'));
+ReactDOM.render(<Routes />, mountNode);
 
 registerServiceWorker();

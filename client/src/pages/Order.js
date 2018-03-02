@@ -5,6 +5,8 @@ import {Container,Row,Col,Button,Table,Input,Form} from 'reactstrap';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import NumericInput from 'react-numeric-input';
 import Navigation from '../components/NavBar.js';
+import keyIndex from 'react-key-index';
+import dateFormat from 'dateformat';
 
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
@@ -30,7 +32,11 @@ export default class Order extends React.Component {
 		this.state = {
 			dbInfo: localStorage.getItem('dbInfo'),
 			orderItems: [],
+			empty: true,
 			itemState: '',
+			deptState: '',
+			profState: '',
+			grantState: '',
 			showAdd: true,
 			showModal: false
 		}
@@ -39,6 +45,9 @@ export default class Order extends React.Component {
 		this.confirmAdd = this.confirmAdd.bind(this);
 		this.cancelAdd = this.cancelAdd.bind(this);
 		this.toggle = this.toggle.bind(this);
+		this.removeItem = this.removeItem.bind(this);
+		this.hashID = this.hashID.bind(this);
+		this.resetStates = this.resetStates.bind(this);
 	}
 
 	// var one = {
@@ -49,12 +58,57 @@ export default class Order extends React.Component {
 	//  grant: "N/A"
  // }
 
+ hashID(){
+	 	 var length = 8;
+		 var now  = new Date();
+		 var timestamp = dateFormat(now, "yyyymmsshhMMdd");
+
+		 var _getRandomInt = function( min, max ) {
+			return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+		 }
+
+		 var ts = timestamp.toString()
+		 var parts = ts.split("").reverse();
+		 var id = "";
+
+		 console.log("timestamp: "+ts);
+
+		 for( var i = 0; i < length; ++i ) {
+			var index = _getRandomInt( 0, parts.length - 1 );
+			id += parts[index];
+		 }
+
+		 console.log("id: "+id);
+		 return id;
+ }
+
+ resetStates(){
+	 this.setState({itemState: ''});
+	 this.setState({deptState: ''});
+	 this.setState({profState: ''});
+	 this.setState({grantState: ''});
+ }
+
  addItem(e){
 	 console.log("You are adding a new item.");
-	 this.setState({showForm:true});
-	 this.setState({showAdd: false});
-	 this.setState({showSubmitButtons: true});
+
+	 // var item = {_id: 123, item: "item 1", qua: 3, dept: "Bio", prof: "Adair", grant: "N/A"};
+
+	 var q = document.getElementById('quantity').value;
+
+	 var k = this.hashID();
+	 console.log("key: "+k);
+	 var item = {_id: k, item: this.state.itemState.label, qua: q, dept: this.state.deptState.label,
+		 	prof: this.state.profState.label, grant: this.state.grantState.label};
+
+	 this.resetStates();
+
+	 this.setState({empty:false});
+	 this.state.orderItems.push(item);
+	 this.toggle();
  }
+
+
 
  confirmAdd(e){
 	 console.log("You confirmed adding the new item.");
@@ -64,12 +118,13 @@ export default class Order extends React.Component {
 
 	 e.preventDefault();
 
+	 /*
 	 var item = document.getElementById('itemSelect').value;
 	 var quantity = document.getElementById('quantity').value;
 	 var dept = document.getElementById('dept').value;
 	 var prof = document.getElementById('prof').value;
 	 var grant = document.getElementById('grant').value;
-
+	 */
  }
 
  cancelAdd(e){
@@ -86,18 +141,58 @@ export default class Order extends React.Component {
 	 // document.getElementById('grant').value = null;
  }
 
+ removeItem(key){
+	 console.log("boop");
+	 console.log(key);
+
+	 var len = this.state.orderItems.length;
+	 var index = -1;
+	 for(var i = 0; i < len; i++){ // iterate through each item
+		 if(this.state.orderItems[i]._id === key){
+			 index = i;
+			 break;
+		 } // end 'if item equals key'
+	 } // end 'for each item'
+
+	 this.state.orderItems.splice(index,1);
+	 this.setState({orderItems: this.state.orderItems});
+
+	 if(this.state.orderItems.length == 0){
+		 this.setState({empty:true});
+	 }
+ }
+
 toggle(){
 	this.setState({showModal: !this.state.showModal});
 }
 
 	render() {
 		const data = this.state.orderItems;
-		const ItemList = data.map((d) => <Item id={d._id} itemName={d.item} qua={d.qua} dept={d.dept} prof={d.prof} grant ={d.grant} />);
+		const ItemList = data.map((d) => <Item key={d._id} id={d._id} itemName={d.item} qua={d.qua} dept={d.dept}
+						prof={d.prof} grant ={d.grant} action={this.removeItem} />);
 
 		var itemOptions = [
-      {value: "one", label: "item one"},
-      {value: "two", label: "item two"},
-      {value: "three", label: "item three"}
+      {value: "dry-ice", label: "Dry Ice"},
+      {value: "alcohol", label: "Alcohol"},
+      {value: "gloves", label: "Gloves"}
+    ];
+
+		var deptOptions = [
+      {value: "bio", label: "Biology"},
+      {value: "chem", label: "Chemistry"},
+      {value: "phy", label: "Physics"}
+    ];
+
+		var profOptions = [
+      {value: "a", label: "Adair"},
+      {value: "h", label: "Hodson"},
+      {value: "none", label: "N/A"}
+    ];
+
+		var grantOptions = [
+      {value: "1", label: "Grant 1"},
+      {value: "another", label: "Another Grant"},
+      {value: "none", label: "N/A"}
     ];
 
 		return (
@@ -164,7 +259,10 @@ toggle(){
 					        </thead>
 
 									{/* CONTENT */}
-					        <tbody>
+
+									<tbody>
+
+									{/*
 
 					          <tr>
 					            <th scope="row">Dry Ice</th>
@@ -184,19 +282,39 @@ toggle(){
 											<td className="text-center"><Button color="danger" size="sm">X</Button></td>
 					          </tr>
 
+										*/}
+
 										{ItemList}
 
 										<Modal isOpen={this.state.showModal} toggle={this.toggle}>
 						          <ModalHeader toggle={this.toggle}>Add Item</ModalHeader>
 						          <ModalBody>
-						            <Form>
-													<Select options={itemOptions} value={this.state.itemState.value} name="item" placeholder="Choose an item..." onChange={val=> this.setState({itemState:val})}/>
-												</Form>
+													<Form>
+													<Select id="item" options={itemOptions} value={this.state.itemState.value} placeholder="Choose an Item..."
+																onChange={val=> this.setState({itemState:val}) } required/>
+
+													<br/>
+													<NumericInput id="quantity" className="form-control" name="quantity" value={0} min={0} precision={0} required />
+
+													<br/>
+													<Select id="department" options={deptOptions} value={this.state.deptState.value} placeholder="Choose a Dept..."
+																onChange={val=> this.setState({deptState:val})} required/>
+
+													<br/>
+													<Select id="professor" options={profOptions} value={this.state.profState.value} placeholder="Choose a Professor..."
+																onChange={val=> this.setState({profState:val})} required/>
+
+													<br/>
+													<Select id="grant" options={grantOptions} value={this.state.grantState.value} placeholder="Choose a Grant..."
+																onChange={val=> this.setState({grantState:val})} required/>
+
+													</Form>
 						          </ModalBody>
 						          <ModalFooter>
-						            <Button color="success" onClick={this.toggle}>Add This Item</Button>{' '}
+						            <Button color="success" onClick={this.addItem}>Add This Item</Button>{' '}
 						            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
 						          </ModalFooter>
+
 						        </Modal>
 
 					        </tbody>
@@ -204,15 +322,24 @@ toggle(){
 							</Col>
 						</Row>
 
+						{this.state.empty ?
+							<Row>
+								<Col className="text-center h5 font-italic">
+								No Items Added
+								</Col>
+							</Row>
+							: null
+						}
+
 						{/* THIS ROW CONTAINS: the "add item" button */}
 						<Row className="order-row">
 
 							<Col className="text-right align-top">
 								{this.state.showAdd && <Button color="primary" size="md" onClick={this.toggle}>+ Add Item</Button>}
-								 {/* {this.state.showSubmitButtons ? <div><Button color="success" size="md" onClick={this.confirmAdd}>Confirm</Button>&nbsp;
-																<Button color="danger" size="md" onClick={this.cancelAdd}>Cancel</Button></div> : null} */}
 							</Col>
+
 						</Row>
+
 					</Container>
 
         </div>
@@ -222,10 +349,6 @@ toggle(){
 
 class Item extends React.Component {
 
-	constructor(props){
-		super(props);
-	}
-
 	render(){
 		return(
 			<tr>
@@ -234,7 +357,7 @@ class Item extends React.Component {
 				<td>{this.props.dept}</td>
 				<td>{this.props.prof}</td>
 				<td>{this.props.grant}</td>
-				<td className="text-center"><Button color="danger" size="sm">X</Button></td>
+				<td className="text-center"><Button color="danger" size="sm" onClick={() => this.props.action(this.props.id)}>X</Button></td>
 			</tr>
 		);
 	}

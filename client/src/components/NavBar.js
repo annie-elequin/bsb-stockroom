@@ -13,7 +13,7 @@ export default class Navigation extends React.Component {
     return (
       <div>
         <Navbar className="navbar-dark bg-dark">
-          <Link to="/"><NavbarBrand>BSB Stockroom App (click to go home)</NavbarBrand></Link>
+          <NavbarBrand><Link to="/">BSB Stockroom App (click to go home)</Link></NavbarBrand>
           <Nav>
             <NavLink href="#">Link</NavLink>
             <NavLink href="#">Link</NavLink>
