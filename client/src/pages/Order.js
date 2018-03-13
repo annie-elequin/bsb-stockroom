@@ -34,6 +34,7 @@ export default class Order extends React.Component {
 			orderItems: [],
 			empty: true,
 			itemState: '',
+			// numState: 0,
 			deptState: '',
 			profState: '',
 			grantState: '',
@@ -42,8 +43,8 @@ export default class Order extends React.Component {
 		}
 
 		this.addItem = this.addItem.bind(this);
-		this.confirmAdd = this.confirmAdd.bind(this);
-		this.cancelAdd = this.cancelAdd.bind(this);
+		// this.confirmAdd = this.confirmAdd.bind(this);
+		// this.cancelAdd = this.cancelAdd.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.removeItem = this.removeItem.bind(this);
 		this.hashID = this.hashID.bind(this);
@@ -84,6 +85,7 @@ export default class Order extends React.Component {
 
  resetStates(){
 	 this.setState({itemState: ''});
+	 // this.setState({numState: 0});
 	 this.setState({deptState: ''});
 	 this.setState({profState: ''});
 	 this.setState({grantState: ''});
@@ -95,6 +97,7 @@ export default class Order extends React.Component {
 	 // var item = {_id: 123, item: "item 1", qua: 3, dept: "Bio", prof: "Adair", grant: "N/A"};
 
 	 var q = document.getElementById('quantity').value;
+	 console.log("QUA: "+q);
 
 	 var k = this.hashID();
 	 console.log("key: "+k);
@@ -110,36 +113,36 @@ export default class Order extends React.Component {
 
 
 
- confirmAdd(e){
-	 console.log("You confirmed adding the new item.");
-	 this.setState({showForm:false});
-	 this.setState({showAdd: true});
-	 this.setState({showSubmitButtons: false});
+ // confirmAdd(e){
+	//  console.log("You confirmed adding the new item.");
+	//  this.setState({showForm:false});
+	//  this.setState({showAdd: true});
+	//  this.setState({showSubmitButtons: false});
+ //
+	//  e.preventDefault();
+ //
+	//  /*
+	//  var item = document.getElementById('itemSelect').value;
+	//  var quantity = document.getElementById('quantity').value;
+	//  var dept = document.getElementById('dept').value;
+	//  var prof = document.getElementById('prof').value;
+	//  var grant = document.getElementById('grant').value;
+	//  */
+ // }
 
-	 e.preventDefault();
-
-	 /*
-	 var item = document.getElementById('itemSelect').value;
-	 var quantity = document.getElementById('quantity').value;
-	 var dept = document.getElementById('dept').value;
-	 var prof = document.getElementById('prof').value;
-	 var grant = document.getElementById('grant').value;
-	 */
- }
-
- cancelAdd(e){
-	 console.log("Cancelled Add.");
-
-	 this.setState({showForm:false});
-	 this.setState({showAdd: true});
-	 this.setState({showSubmitButtons: false});
-
-	 // document.getElementById('itemSelect').value = null;
-	 // document.getElementById('quantity').value = null;
-	 // document.getElementById('dept').value = null;
-	 // document.getElementById('prof').value = null
-	 // document.getElementById('grant').value = null;
- }
+ // cancelAdd(e){
+	//  console.log("Cancelled Add.");
+ //
+	//  this.setState({showForm:false});
+	//  this.setState({showAdd: true});
+	//  this.setState({showSubmitButtons: false});
+ //
+	//  // document.getElementById('itemSelect').value = null;
+	//  // document.getElementById('quantity').value = null;
+	//  // document.getElementById('dept').value = null;
+	//  // document.getElementById('prof').value = null
+	//  // document.getElementById('grant').value = null;
+ // }
 
  removeItem(key){
 	 console.log("boop");
@@ -154,10 +157,10 @@ export default class Order extends React.Component {
 		 } // end 'if item equals key'
 	 } // end 'for each item'
 
-	 this.state.orderItems.splice(index,1);
-	 this.setState({orderItems: this.state.orderItems});
+	 this.state.orderItems.splice(index,1); // remove the item at that index
+	 this.setState({orderItems: this.state.orderItems}); // set the new order thing as the state
 
-	 if(this.state.orderItems.length == 0){
+	 if(this.state.orderItems.length === 0){ // check if the items is empty, if it is, set true
 		 this.setState({empty:true});
 	 }
  }
@@ -240,7 +243,7 @@ toggle(){
 							</Col>
 						</Row>
 
-						{/* THIS ROW CONTAINS: the list of items that the user has ordered */}
+					{/* THIS ROW CONTAINS: the list of items that the user has ordered */}
 						<Row className="order-row">
 							<Col>
 							{/* TABLE CONTAINING ORDER DETAILS */}
@@ -294,7 +297,7 @@ toggle(){
 																onChange={val=> this.setState({itemState:val}) } required/>
 
 													<br/>
-													<NumericInput id="quantity" className="form-control" name="quantity" value={0} min={0} precision={0} required />
+													<NumericInput id="quantity" className="form-control" name="quantity" min={0} mobile />
 
 													<br/>
 													<Select id="department" options={deptOptions} value={this.state.deptState.value} placeholder="Choose a Dept..."
