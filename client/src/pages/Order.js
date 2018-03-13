@@ -6,6 +6,7 @@ import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import NumericInput from 'react-numeric-input';
 import Navigation from '../components/NavBar.js';
 import dateFormat from 'dateformat';
+import axios from 'axios';
 
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
@@ -48,15 +49,19 @@ export default class Order extends React.Component {
 		this.removeItem = this.removeItem.bind(this);
 		this.hashID = this.hashID.bind(this);
 		this.resetStates = this.resetStates.bind(this);
-	}
 
-	// var one = {
-	//  item: "one",
-	//  qua: 2,
-	//  dept: "Physics",
-	//  prof: "Nazzario",
-	//  grant: "N/A"
- // }
+		//Get all the customers
+    axios.get('/getCustomers')
+    .then( res => {
+      // users = res.data;
+			console.log("BOOP");
+			console.log(res);
+    })
+    .catch( err => {
+      console.log(err);
+    });
+
+	}
 
  hashID(){
 	 	 var length = 8;

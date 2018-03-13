@@ -1,7 +1,10 @@
 const express = require('express');
 const path = require('path');
 import axios from 'axios';
+var MongoClient = require('mongodb').MongoClient
+
 const generatePassword = require('password-generator');
+const url = 'mongodb://'+process.env.USER+':'+process.env.PASS+'@'+process.env.HOST+':'+process.env.DBPORT+'/'+process.env.DB;
 
 const app = express();
 
@@ -52,9 +55,34 @@ API ENDPOINTS NEEDED (for the order page at least)
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+app.get('/getCustomers', (req, res) => {
+
+  mongodb.MongoClient.connect(url, function(err, db) {
+    if(err){
+      console.log(err);
+      throw err;
+    }
+
+    var users = db.collection('customers');
+
+    //Return all documents in the selection
+    users.find({}).toArray().then(docs =>{
+      res.send(docs);
+    });
+
+    users.insert({name: 'taco', tasty: true}, function(err, result) {
+    users.find({name: 'taco'}).toArray(function(err, docs) {
+      console.log(docs[0])
+      db.close()
+    })
+  })
+  });
+
+});
+
 app.get('/api/itemInfo', (req, res) => {
 
-})
+});
 
 // Put all API endpoints under '/api'
 app.get('/api/passwords', (req, res) => {
