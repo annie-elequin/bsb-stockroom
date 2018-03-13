@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+import axios from 'axios';
 const generatePassword = require('password-generator');
 
 const app = express();
@@ -50,6 +51,10 @@ API ENDPOINTS NEEDED (for the order page at least)
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('/api/itemInfo', (req, res) => {
+
+})
 
 // Put all API endpoints under '/api'
 app.get('/api/passwords', (req, res) => {
