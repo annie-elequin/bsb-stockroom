@@ -5,7 +5,6 @@ import {Container,Row,Col,Button,Table,Input,Form} from 'reactstrap';
 import {Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import NumericInput from 'react-numeric-input';
 import Navigation from '../components/NavBar.js';
-import keyIndex from 'react-key-index';
 import dateFormat from 'dateformat';
 
 import Select from 'react-select';

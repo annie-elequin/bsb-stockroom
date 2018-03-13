@@ -10,9 +10,6 @@
     "password-generator": "^2.1.0",
     "update": "^0.7.4"
   },
-  "engines": {
-    "node": "9.4.x"
-  },
   "scripts": {
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
